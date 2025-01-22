@@ -9,6 +9,9 @@ const integrantesController = {
 
       const objIntegrante = await schemaIntegrantes.create(integrante);
 
+      if (!objIntegrante) 
+        return res.status(400).json({ msg: "Integrante não criado!" })
+
       res.status(201).json({ objIntegrante, msg: "Integrante criado!" });
     } catch (error) {
       res.status(400).json({ "Erro ao adicionar integrante": error });
@@ -18,6 +21,9 @@ const integrantesController = {
   getAllIntegrantes: async (_req: Request, res: Response) => {
     try {
       const objIntegrantes = await schemaIntegrantes.find();
+
+      if (!objIntegrantes) 
+        return res.status(404).json({ msg: "Integrantes não encontrados!" })
 
       res.status(200).send(objIntegrantes);
     } catch (error) {
@@ -36,7 +42,6 @@ const integrantesController = {
         return res.status(404).json({ msg: "Integrante não encontrado!" })
 
       res.status(200).json({ objIntegrante, msg: "Integrante atualizado!" });
-      
     } catch (error) {
       res.status(400).json({ "Erro ao atualizar integrante": error });
     }
@@ -52,7 +57,6 @@ const integrantesController = {
         return res.status(404).json({ msg: "Integrante não encontrado!" })
 
       res.status(200).json({ objIntegrante, msg: "Integrante deletado!" });
-      
     } catch (error) {
       res.status(400).json({ "Erro ao deletar integrante": error })
     }
