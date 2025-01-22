@@ -21,7 +21,40 @@ const integrantesController = {
 
       res.status(200).send(objIntegrantes);
     } catch (error) {
-      res.status(400).json(error);
+      res.status(400).json({ "Erro ao resgatar integrantes": error });
+    }
+  },
+
+  updateIntegrante: async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const integrante: integrantesProps = { ...req.body };
+
+      const objIntegrante = await schemaIntegrantes.findByIdAndUpdate(id, integrante)
+
+      if (!objIntegrante) 
+        return res.status(404).json({ msg: "Integrante não encontrado!" })
+
+      res.status(200).json({ objIntegrante, msg: "Integrante atualizado!" });
+      
+    } catch (error) {
+      res.status(400).json({ "Erro ao atualizar integrante": error });
+    }
+  },
+
+  deleteIntegrante: async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+
+      const objIntegrante = await schemaIntegrantes.findByIdAndDelete(id);
+
+      if (!objIntegrante) 
+        return res.status(404).json({ msg: "Integrante não encontrado!" })
+
+      res.status(200).json({ objIntegrante, msg: "Integrante deletado!" });
+      
+    } catch (error) {
+      res.status(400).json({ "Erro ao deletar integrante": error })
     }
   }
 

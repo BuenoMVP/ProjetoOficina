@@ -11,4 +11,12 @@ router.post('/', (req: Request, res: Response) => {
     integrantesController.postIntegrante(req, res)
 })
 
+router.put('/:id', (req: Request, res: Response) => {
+    integrantesController.updateIntegrante(req, res)
+})
+
+router.delete('/:id', (req: Request, res: Response) => {
+    integrantesController.deleteIntegrante(req, res)
+})
+
 export default router
