@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Request, Response } from 'express'
 import router from '../routes/router'
 import bodyParser from 'body-parser'
 import cors from 'cors'
@@ -9,7 +9,7 @@ server.use(bodyParser.json())
 
 server.use(cors())
 
-server.get('/', (_req, res) => {
+server.get('/', (_req: Request, res: Response) => {
     res.send('Inicio Back')
 })
 
