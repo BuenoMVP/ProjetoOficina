@@ -15,7 +15,8 @@ const encontrosSchema = new Schema<encontrosProps>({
         required: true
     },
     grupoID: {
-        type: Number,
+        type: Schema.Types.ObjectId,
+        ref: "grupos",
         required: true
     },
     observacoes: {

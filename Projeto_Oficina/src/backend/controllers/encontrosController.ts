@@ -31,6 +31,21 @@ const encontrosController = {
         }
     },
 
+    getEncontrosByGrupo: async (req: Request, res: Response) => {
+        try {
+            const { grupo } = req.params;
+
+            const objEncontros = await schemaEncontros.find({ grupoID: grupo });
+
+            if (!objEncontros)
+                return res.status(404).json({ msg: "Encontros não encontrados para este grupo!" });
+
+            res.status(200).send(objEncontros);
+        } catch (error) {
+            res.status(400).json({ "Erro ao resgatar encontros por grupo": error });
+        }
+    },
+
     updateEncontro: async (req: Request, res: Response) => {
         try {
             const { id } = req.params;
