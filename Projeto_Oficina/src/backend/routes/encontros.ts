@@ -7,6 +7,10 @@ router.get('/', (req: Request, res: Response) => {
     encontrosController.getAllEncontros(req, res)
 })
 
+router.get('/:grupo', (req: Request, res: Response) => {
+    encontrosController.getEncontrosByGrupo(req, res)
+})
+
 router.post('/', (req: Request, res: Response) => {
     encontrosController.postEncontro(req, res)
 })

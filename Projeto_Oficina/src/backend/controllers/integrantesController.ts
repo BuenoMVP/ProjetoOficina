@@ -31,6 +31,21 @@ const integrantesController = {
     }
   },
 
+  getIntegrantesByGrupo: async (req: Request, res: Response) => {
+    try {
+      const { grupo } = req.params;
+
+      const objIntegrantes = await schemaIntegrantes.find({ grupoID: grupo });
+
+      if (!objIntegrantes) 
+        return res.status(404).json({ msg: "Integrantes não encontrados para este grupo!" })
+
+      res.status(200).send(objIntegrantes);
+    } catch (error) {
+      res.status(400).json({ "Erro ao resgatar integrantes por grupo": error });
+    }
+  },
+
   updateIntegrante: async (req: Request, res: Response) => {
     try {
       const { id } = req.params;

@@ -7,6 +7,10 @@ router.get('/', (req: Request, res: Response) => {
     integrantesController.getAllIntegrantes(req, res)
 })
 
+router.get('/:grupo', (req: Request, res: Response) => {
+    integrantesController.getIntegrantesByGrupo(req, res)
+})
+
 router.post('/', (req: Request, res: Response) => {
     integrantesController.postIntegrante(req, res)
 })

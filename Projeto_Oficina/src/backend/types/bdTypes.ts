@@ -13,7 +13,7 @@ interface usuariosProps {
 interface integrantesProps {
     nome: string;
     dataNascimento: string;
-    grupoID: number;
+    grupoID: gruposProps;
     escola: string;
     email: string;
     telefone: string;
@@ -33,7 +33,7 @@ interface encontrosProps {
     data: string;
     hora: string;
     local: string;
-    grupoID: number;
+    grupoID: gruposProps;
     observacoes: string;
     tema: string;
     concluido: boolean;

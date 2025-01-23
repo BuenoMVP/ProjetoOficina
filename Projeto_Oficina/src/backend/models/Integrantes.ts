@@ -11,7 +11,8 @@ const integrantesSchema = new Schema<integrantesProps>({
         required: true 
     },
     grupoID: { 
-        type: Number, 
+        type: Schema.Types.ObjectId,
+        ref: "grupos",  
         required: true 
     },
     escola: { 
