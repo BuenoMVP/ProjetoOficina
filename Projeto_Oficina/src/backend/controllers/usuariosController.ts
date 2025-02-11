@@ -8,6 +8,13 @@ const usuariosController = {
     try {
       const usuario: usuariosProps = { ...req.body };
 
+      const validUser = await schemaUsuarios.find({
+        email: usuario.email
+      })
+
+      if (validUser.length > 0)
+        return res.status(400).json({ msg: "Usuário já cadastrado!" });
+
       const objUsuario = await schemaUsuarios.create(usuario);
 
       if (!objUsuario)
