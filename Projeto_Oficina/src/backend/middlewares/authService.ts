@@ -7,7 +7,7 @@ const secret = process.env.JWT_SECRET || 'default_secret'
 
 const createToken = (user: object) => {
     const token = jwt.sign({data: user}, secret)
-    console.log("token: "+token)
+    // console.log("token: "+token)
     return token
 }
 

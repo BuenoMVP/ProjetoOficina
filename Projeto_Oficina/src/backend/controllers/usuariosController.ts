@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import schemaUsuarios from "../models/Usuarios";
 import { usuariosProps } from "../types/bdTypes";
 import { createToken } from "../middlewares/authService";
+import { hash, compare } from "bcryptjs";
 
 const usuariosController = {
   postUsuario: async (req: Request, res: Response) => {
@@ -15,7 +16,16 @@ const usuariosController = {
       if (validUser.length > 0)
         return res.status(400).json({ msg: "Usuário já cadastrado!" });
 
-      const objUsuario = await schemaUsuarios.create(usuario);
+      const passwordHash = await hash(usuario.senha, 8);
+
+      const novoUsuario = {
+        nome: usuario.nome,
+        email: usuario.email,
+        senha: passwordHash,
+        admin: usuario.admin
+      }
+
+      const objUsuario = await schemaUsuarios.create(novoUsuario);
 
       if (!objUsuario)
         return res.status(400).json({ msg: "Usuário não criado!" });
@@ -44,7 +54,16 @@ const usuariosController = {
       const { id } = req.params;
       const usuario: usuariosProps = { ...req.body };
 
-      const objUsuario = await schemaUsuarios.findByIdAndUpdate(id, usuario);
+      const passwordHash = await hash(usuario.senha, 8);
+
+      const novoUsuario = {
+        nome: usuario.nome,
+        email: usuario.email,
+        senha: passwordHash,
+        admin: usuario.admin
+      }
+
+      const objUsuario = await schemaUsuarios.findByIdAndUpdate(id, novoUsuario);
 
       if (!objUsuario)
         return res.status(404).json({ msg: "Usuário não encontrado!" });
@@ -76,13 +95,15 @@ const usuariosController = {
     try {
       const { email, senha } = req.body;
 
-      const validUser = await schemaUsuarios.find({ 
-        email: email, 
-        senha: senha 
-      });
+      const validUser = await schemaUsuarios.find({ email: email });
 
       if (validUser.length <= 0)
         return res.status(404).json({ msg: "Usuário não encontrado!" });
+
+      const comparePassword = await compare(senha, validUser[0].senha);
+
+      if (!comparePassword)
+        return res.status(401).json({ msg: "Senha inválida!" });
 
       const authToken = createToken(validUser[0]);
 
