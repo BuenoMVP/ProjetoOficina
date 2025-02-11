@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import schemaUsuarios from "../models/Usuarios";
 import { usuariosProps } from "../types/bdTypes";
+import { createToken } from "../middlewares/authService";
 
 const usuariosController = {
   postUsuario: async (req: Request, res: Response) => {
@@ -61,6 +62,28 @@ const usuariosController = {
       res.status(400).json({ "Erro ao deletar usuário": error });
     }
   },
+
+  //Login
+
+  login: async (req: Request, res: Response) => {
+    try {
+      const { email, senha } = req.body;
+
+      const validUser = await schemaUsuarios.find({ 
+        email: email, 
+        senha: senha 
+      });
+
+      if (validUser.length <= 0)
+        return res.status(404).json({ msg: "Usuário não encontrado!" });
+
+      const authToken = createToken(validUser[0]);
+
+      res.status(200).send(authToken);
+    } catch (error) {
+      res.status(400).json({ "Erro ao logar": error });
+    }
+  }
 };
 
 export default usuariosController;
