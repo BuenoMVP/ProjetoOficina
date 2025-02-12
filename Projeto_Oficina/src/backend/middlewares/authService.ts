@@ -7,7 +7,7 @@ const secret = process.env.JWT_SECRET || 'default_secret'
 
 const createToken = (user: object) => {
     const token = jwt.sign({data: user}, secret)
-    // console.log("token: "+token)
+    
     return token
 }
 
@@ -44,7 +44,7 @@ const verifyTokenAdmin = (req: Request, res: Response, next: NextFunction):void 
         const isAdmin = cred.data.admin
 
         if (!isAdmin) {
-            res.status(401).send('Acesso negado!');
+            res.status(401).send({'Rota protegida': 'Acesso negado!'});
             return 
         }
 
