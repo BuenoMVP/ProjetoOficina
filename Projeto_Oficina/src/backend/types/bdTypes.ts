@@ -23,10 +23,12 @@ interface gruposProps {
     nome: string;
     senioridade: string;
     integrantes: integrantesProps[];
+    status: statusProps;
 }
 
 interface statusProps {
     status: string;
+    position: number;
 }
 
 interface encontrosProps {

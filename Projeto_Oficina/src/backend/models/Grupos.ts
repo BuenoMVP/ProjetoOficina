@@ -14,7 +14,12 @@ const gruposSchema = new Schema<gruposProps>({
         type: Schema.Types.ObjectId,
         ref: "integrantes",
         require: false
-    }]
+    }],
+    status: {
+        type: Schema.Types.ObjectId,
+        ref: "status",
+        require: true
+    }
 })
 
 const schemaGrupos = model("grupos", gruposSchema)

@@ -5,6 +5,10 @@ const statusSchema = new Schema<statusProps>({
     status: {
         type: String,
         required: true
+    },
+    position: {
+        type: Number,
+        required: true
     }
 })
 

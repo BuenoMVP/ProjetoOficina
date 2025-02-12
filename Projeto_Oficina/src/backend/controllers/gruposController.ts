@@ -20,7 +20,7 @@ const gruposController = {
 
     getAllGrupos: async (_req: Request, res: Response) => {
         try {
-            const objGrupos = await schemaGrupos.find().populate("integrantes");
+            const objGrupos = await schemaGrupos.find().populate("integrantes").populate("status");
 
             if (!objGrupos)
                 return res.status(404).json({ msg: "Grupos não encontrados!" });

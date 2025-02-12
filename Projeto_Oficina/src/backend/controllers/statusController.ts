@@ -36,7 +36,34 @@ const statusController = {
             const { id } = req.params;
             const status: statusProps = { ...req.body };
 
-            const objStatus = await schemaStatus.findByIdAndUpdate(id, status);
+            const originalStatus = await schemaStatus.findById(id);
+            
+            if (!originalStatus)
+                return res.status(404).json({ msg: "Status não encontrado!" });
+
+            if (originalStatus.position < status.position) {
+                const statusAfetados = await schemaStatus.find({
+                    position: { $gt: originalStatus.position, $lte: status.position }
+                });
+
+                console.log(statusAfetados);
+
+                for (const status of statusAfetados) {
+                    status.position -= 1;
+                    await status.save();
+                }
+            } else if (originalStatus.position > status.position) {
+                const statusAfetados = await schemaStatus.find({
+                    position: { $gte: status.position }
+                });
+    
+                for (const status of statusAfetados) {
+                    status.position += 1;
+                    await status.save();
+                }
+            }
+
+            const objStatus = await schemaStatus.findByIdAndUpdate(id, status, { new: true });
 
             if (!objStatus)
                 return res.status(404).json({ msg: "Status não encontrado!" });
