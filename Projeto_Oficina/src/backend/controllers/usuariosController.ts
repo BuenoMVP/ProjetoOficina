@@ -3,6 +3,7 @@ import schemaUsuarios from "../models/Usuarios";
 import { usuariosProps } from "../types/bdTypes";
 import { createToken } from "../middlewares/authService";
 import { hash, compare } from "bcryptjs";
+import sendEmail from "../config/email.config";
 
 const usuariosController = {
   postUsuario: async (req: Request, res: Response) => {
@@ -16,7 +17,9 @@ const usuariosController = {
       if (validUser.length > 0)
         return res.status(400).json({ msg: "Usuário já cadastrado!" });
 
-      const passwordHash = await hash(usuario.senha, 8);
+      const passwordRandom = generateRandomPassword()
+
+      const passwordHash = await hash(passwordRandom, 8);
 
       const novoUsuario = {
         nome: usuario.nome,
@@ -29,6 +32,18 @@ const usuariosController = {
 
       if (!objUsuario)
         return res.status(400).json({ msg: "Usuário não criado!" });
+
+      const mailContent = {
+        subject: "Cadastro de usuário",
+        text: `Email: ${novoUsuario.email} -- Senha: ${passwordRandom}`,
+        html: `<h1>Dados cadastrais</h1>
+        <p>Seu email é: <strong>${novoUsuario.email}</strong></p>
+        <p>Sua senha é: <strong>${passwordRandom}</strong></p>
+        <span>ALTERE SUA SENHA CLICANDO EM "Esqueci minha senha" NA TELA DE LOGIN!</span>
+        `
+      }
+
+      await sendEmail(novoUsuario.email, mailContent)
 
       res.status(201).json({ objUsuario, msg: "Usuário criado!" });
     } catch (error) {
@@ -115,5 +130,15 @@ const usuariosController = {
     }
   }
 };
+
+const generateRandomPassword = (): string => {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let password = '';
+  for (let i = 0; i < 8; i++) {
+      const randomIndex = Math.floor(Math.random() * chars.length);
+      password += chars[randomIndex];
+  }
+  return password;
+}
 
 export default usuariosController;
