@@ -11,11 +11,11 @@ import { verifyToken } from "../middlewares/authService"
 const router = express.Router()
 
 router.use('/integrantes', verifyToken, integrantesRouter)
-router.use('/usuarios', verifyToken, usuariosRouter)
+router.use('/usuarios', usuariosRouter)
 router.use('/informacoes', verifyToken, informacoesRouter)
 router.use('/encontros', verifyToken, encontrosRouter)
 router.use('/grupos', verifyToken, gruposRouter)
-router.use('/status', verifyToken, statusRouter)
+router.use('/status', statusRouter)
 router.use('/email', emailRouter)
 
 router.use('/', (_req: Request, res: Response) => {
