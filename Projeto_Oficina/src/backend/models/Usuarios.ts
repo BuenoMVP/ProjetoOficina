@@ -14,6 +14,14 @@ const usuariosSchema = new Schema<usuariosProps>({
         type: String, 
         required: true 
     },
+    senhaResetToken: {
+        type: String,
+        select: false
+    },
+    senhaResetExpires: {
+        type: Date,
+        select: false
+    },
     admin: { 
         type: Boolean, 
         required: true 

@@ -7,6 +7,8 @@ interface usuariosProps {
     nome: string;
     email: string;
     senha: string;
+    senhaResetToken: string;
+    senhaResetExpires: Date;
     admin: boolean;
 }
 

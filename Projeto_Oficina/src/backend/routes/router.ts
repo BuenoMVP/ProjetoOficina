@@ -5,6 +5,7 @@ import informacoesRouter from "./informacoes"
 import encontrosRouter from "./encontros"
 import gruposRouter from "./grupos"
 import statusRouter from "./status"
+import emailRouter from "./email"
 import { verifyToken } from "../middlewares/authService"
 
 const router = express.Router()
@@ -15,6 +16,7 @@ router.use('/informacoes', verifyToken, informacoesRouter)
 router.use('/encontros', verifyToken, encontrosRouter)
 router.use('/grupos', verifyToken, gruposRouter)
 router.use('/status', verifyToken, statusRouter)
+router.use('/email', emailRouter)
 
 router.use('/', (_req: Request, res: Response) => {
     res.send('Página inicial da api')
