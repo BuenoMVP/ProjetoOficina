@@ -20,7 +20,7 @@ const encontrosController = {
 
     getAllEncontros: async (_req: Request, res: Response) => {
         try {
-            const objEncontros = await schemaEncontros.find();
+            const objEncontros = await schemaEncontros.find().populate("usuarios");
 
             if (!objEncontros)
                 return res.status(404).json({ msg: "Encontros não encontrados!" });

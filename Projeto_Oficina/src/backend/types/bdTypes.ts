@@ -38,6 +38,7 @@ interface encontrosProps {
     grupoID: gruposProps;
     observacoes: string;
     tema: string;
+    usuarios: usuariosProps[];
     concluido: boolean;
 }
 
