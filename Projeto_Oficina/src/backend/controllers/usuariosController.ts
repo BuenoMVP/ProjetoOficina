@@ -100,6 +100,8 @@ const usuariosController = {
       if (validUser.length <= 0)
         return res.status(404).json({ msg: "Usuário não encontrado!" });
 
+      const admin = validUser[0].admin;
+
       const comparePassword = await compare(senha, validUser[0].senha);
 
       if (!comparePassword)
@@ -107,7 +109,7 @@ const usuariosController = {
 
       const authToken = createToken(validUser[0]);
 
-      res.status(200).json({ token: authToken });
+      res.status(200).json({ token: authToken, admin: admin});
     } catch (error) {
       res.status(400).json({ "Erro ao logar": error });
     }
