@@ -27,6 +27,11 @@ const encontrosSchema = new Schema<encontrosProps>({
         type: String,
         required: true
     },
+    usuarios: [{
+        type: Schema.Types.ObjectId,
+        ref: "usuarios",
+        required: true
+    }],
     concluido: {
         type: Boolean,
         required: true

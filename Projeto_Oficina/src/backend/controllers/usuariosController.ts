@@ -107,7 +107,7 @@ const usuariosController = {
 
       const authToken = createToken(validUser[0]);
 
-      res.status(200).send(authToken);
+      res.status(200).json({ token: authToken });
     } catch (error) {
       res.status(400).json({ "Erro ao logar": error });
     }
