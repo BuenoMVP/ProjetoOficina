@@ -35,7 +35,7 @@ const encontrosController = {
         try {
             const { grupo } = req.params;
 
-            const objEncontros = await schemaEncontros.find({ grupoID: grupo });
+            const objEncontros = await schemaEncontros.find({ grupoID: grupo }).populate("usuarios");
 
             if (!objEncontros)
                 return res.status(404).json({ msg: "Encontros não encontrados para este grupo!" });

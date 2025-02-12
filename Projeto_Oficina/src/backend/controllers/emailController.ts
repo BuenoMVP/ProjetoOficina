@@ -37,8 +37,10 @@ const emailController = {
             const mailContent = {
                 subject: "Recuperação de senha",
                 text: `Seu código de recuperação é: ${tokenRecuperacao}`,
-                html: `<p>Seu código de recuperação é: <strong>${tokenRecuperacao}</strong></p>`
-            }
+                html: `<h1>Recuperação de Senha</h1>
+                <p>Seu código de recuperação é: <strong>${tokenRecuperacao}</strong></p>
+                `
+              }
 
             await sendEmail(email, mailContent)
 
